@@ -1,0 +1,83 @@
+section[data-testid='stSidebar'] {
+    background-color: #111;
+    min-width:unset !important;
+    width: unset !important;
+    flex-shrink: unset !important;
+    
+}
+
+button[kind="header"] {
+    background-color: transparent;
+    color:rgb(180, 167, 141)
+}
+
+div.stButton > button:first-child {
+    background-color: #49B74E;
+    color: white;
+    height: 3em;
+    width: 12em;
+    border-radius:20px;
+    border:1px solid #000000;
+    font-size:20px;
+    font-weight: bold;
+    margin: auto;
+    display: block;
+}
+div.stButton > button:hover {
+    background:linear-gradient(to bottom, #ce1126 5%, #ff5a5a 100%);
+    background-color:#ce1126;
+}
+div.stButton > button:active {
+    position:relative;
+    top:3px;
+}
+ .css-79elbk{
+    display:none;
+}
+
+
+@media(hover){
+    /* header element to be removed */
+    header[data-testid="stHeader"] {
+        display:none;
+    }
+
+    /* The navigation menu specs and size */
+    section[data-testid='stSidebar'] > div {
+        height: 100%;
+        width: 95px;
+        position: relative;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        transition: 0.5s ease;
+        padding-top: 60px;
+        white-space: nowrap;
+    }
+
+    /* The navigation menu open and close on hover and size */
+    /* section[data-testid='stSidebar'] > div {
+    height: 100%;
+    width: 75px; /* Put some width to hover on. */
+    /* } 
+
+    /* ON HOVER */
+    section[data-testid='stSidebar'] > div:hover{
+    width: 300px;
+    }
+
+    /* The button on the streamlit navigation menu - hidden */
+    button[kind="header"] {
+        display: none;
+    }
+}
+     
+@media(max-width: 272px){
+    
+    section[data-testid='stSidebar'] > div {
+        width:15rem;
+    }
+}
+ 
