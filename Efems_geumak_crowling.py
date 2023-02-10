@@ -44,9 +44,9 @@ def get_most_recent_s3_object(bucket_name, prefix):
     latest = None
     for page in page_iterator:
         if "Contents" in page:
-            latest2 = max(page['Contents'], key=lambda x: x['LastModified'])
-            if latest is None or latest2['LastModified'] > latest['LastModified']:
-                latest = latest2
+            latest = max(page['Contents'], key=lambda x: x['LastModified'])
+            # if latest is None or latest2['LastModified'] > latest['LastModified']:
+        
     return latest
 
 def prefix_exits(bucket, path):
@@ -80,10 +80,7 @@ def savefiletonow():
 
         now = datetime.now()
         print("지금은", now.year, "년", now.month, "월", now.day, "일", now.hour, "시", now.minute, "분", now.second, "초입니다.")
-        today10am = now.replace(hour=10, minute=4, second=0, microsecond=0)
-        today16am = now.replace(hour=16, minute=4, second=0, microsecond=0)
-        today00am = now.replace(hour=00, minute=4, second=0, microsecond=0)
-        yesterday = date.today() - timedelta(1)
+
  
 
 
