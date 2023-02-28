@@ -7,7 +7,7 @@ import numpy as np
 import requests
 import streamlit as st
 import pymysql
-
+import os 
 
 from streamlit_autorefresh import st_autorefresh
 from st_on_hover_tabs import on_hover_tabs
@@ -72,6 +72,8 @@ def weather_lottie_setfn(code:str):
         return  "./lotties/weather-cloud.json"
 def main():
 	os_name =  platform.system()
+	os_dir = os.getcwd()
+	st.write(os_dir)
 
 	if os_name == "Linux":
 		m=st.markdown('<style>' + open('home/ubuntu/github/ems1/css/style.css').read() + '</style>', unsafe_allow_html=True)
