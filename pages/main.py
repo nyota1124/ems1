@@ -73,9 +73,10 @@ def weather_lottie_setfn(code:str):
 def main():
 	os_name =  platform.system()
 
-	if os_name == "Windows":
+	if os_name == "Linux":
 		m=st.markdown('<style>' + open('home/ubuntu/github/ems1/css/style.css').read() + '</style>', unsafe_allow_html=True)
-	
+	elif os_name == "Windows":
+		m=st.markdown('<style>' + open('./css/style.css').read() + '</style>', unsafe_allow_html=True)
 
 	
 	file_path = "./lotties/car-ani.json"
@@ -118,7 +119,7 @@ def main():
 					with open(file_path_onright, 'r') as file:lottie_direction = json.load(file)
 					st_lottie(lottie_direction,key="dash_onright")
 			with col4:
-				if result[0][3] > 0 or result[0][10] != 0 :
+				if result[0][3] > 0 or result[0][13] != 0 :
 					file_path_ongreen = "./lotties/dash_ongreen.json"
 					with open(file_path_ongreen, 'r') as file:lottie_direction  = json.load(file)
 					st_lottie(lottie_direction)
@@ -127,29 +128,29 @@ def main():
 					with open(file_path_onyellow, 'r') as file:lottie_direction  = json.load(file)
 					st_lottie(lottie_direction)
 
-				if result[0][10] > 0 :
+				if result[0][13] > 0 :
 					file_path_onup = "./lotties/dash_onup.json"
 					with open(file_path_onup, 'r') as file:lottie_direction = json.load(file)
 					st_lottie(lottie_direction,key="dash_onup")
-				elif result[0][10] < 0 : 
+				elif result[0][13] < 0 : 
 					file_path_ondown = "./lotties/dash_ondown.json"
 					with open(file_path_ondown, 'r') as file:lottie_direction = json.load(file)
 					st_lottie(lottie_direction,key="dash_ondown")
-				elif result[0][10] == 0 : 
+				elif result[0][13] == 0 : 
 					file_path_onsleep = "./lotties/dash_onsleep.json"
 					with open(file_path_onsleep, 'r') as file:lottie_direction = json.load(file)
 					st_lottie(lottie_direction,key="dash_onsleep")
 
-				if result[0][10] > 0 :
+				if result[0][13] > 0 :
 					file_path_uncharging = "./lotties/dash_uncharging.json"
 					with open(file_path_uncharging, 'r') as file:lottie_direction = json.load(file)
 					st_lottie(lottie_direction,key="dash_uncharging")
-				elif result[0][10] < 0 : 
+				elif result[0][13] < 0 : 
 					file_path_charging = "./lotties/dash_charging.json"
 					with open(file_path_charging, 'r') as file:lottie_direction = json.load(file)
 					st_lottie(lottie_direction,key="dash_charging")
-				elif result[0][10] == 0 : 
-					if result[0][13] > 10 : 
+				elif result[0][13] == 0 : 
+					if result[0][16] > 10 : 
 						file_path_charged = "./lotties/dash_charged.json"
 						with open(file_path_charged, 'r') as file:lottie_direction = json.load(file)
 						st_lottie(lottie_direction,key="dash_charged")
@@ -160,12 +161,12 @@ def main():
 				st.markdown('<div style="text-align: center;">SOC : '+str(result[0][16])+'%</div>', unsafe_allow_html=True)
     
 			with col5:
-				if result[0][10] == 0 and result[0][3] > 0  :
+				if result[0][13] == 0 and result[0][3] > 0  :
 					file_path_onright = "./lotties/dash_onright.json"
 					with open(file_path_onright, 'r') as file:lottie_direction = json.load(file)
 					st_lottie(lottie_direction,key="dash_onright1")
 					on_outputelec = True
-				elif result[0][10] > 0 :
+				elif result[0][13] > 0 :
 					file_path_onright = "./lotties/dash_onright.json"
 					with open(file_path_onright, 'r') as file:lottie_direction = json.load(file)
 					st_lottie(lottie_direction,key="dash_onright1")
