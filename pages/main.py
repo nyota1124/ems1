@@ -76,7 +76,7 @@ def main():
 	st.write(os_dir)
 
 	if os_name == "Linux":
-		m=st.markdown('<style>' + open('home/ubuntu/github/ems1/css/style.css').read() + '</style>', unsafe_allow_html=True)
+		m=st.markdown('<style>' + open('/ems1/css/style.css').read() + '</style>', unsafe_allow_html=True)
 	elif os_name == "Windows":
 		m=st.markdown('<style>' + open('./css/style.css').read() + '</style>', unsafe_allow_html=True)
 
