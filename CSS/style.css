@@ -10,7 +10,9 @@ button[kind="header"] {
     background-color: transparent;
     color:rgb(180, 167, 141)
 }
-
+div[data-testid="stVerticalBlock"] > div:second-of-type {
+    background-color: red;
+  }
 div.stButton > button:first-child {
     background-color: #49B74E;
     color: white;
@@ -62,7 +64,7 @@ div.stButton > button:active {
     height: 100%;
     width: 75px; /* Put some width to hover on. */
     /* } 
-
+    
     /* ON HOVER */
     section[data-testid='stSidebar'] > div:hover{
     width: 300px;
@@ -72,6 +74,7 @@ div.stButton > button:active {
     button[kind="header"] {
         display: none;
     }
+
 }
      
 @media(max-width: 272px){

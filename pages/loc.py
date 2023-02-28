@@ -27,13 +27,12 @@ def viewfn(select_code):
         index_code =newlist[0][0]
         
         return_code= st.write(str(sc_lat) + "|" + str(sc_lng) + "$$$$$" +str(cities[index_code][2])) 
-        return_code1 = st.button(label=str(cities[index_code][2]),on_click=switch_page("main"))
+        return_code1 = st.button(label=str(cities[index_code][2]))
         # return_code1 = st.warning("1234")
         
     else:    
         return_code = st.warning("선택된 지역이 없습니다.")
-        return_code1 = st.warning("    ")
-        
+        return_code1 = None
         # select_code1 = type(select_code1)
  
     return return_code,return_code1
@@ -93,8 +92,10 @@ def main():
 	output=st_folium(m,width=1200, returned_objects=["last_object_clicked"])
 	st.write(output)
 	output_write,output_btn=viewfn(output)
-
+	if output_btn:
+		switch_page("main")
+		# output_btn.onclick = switch_page("main")
 		# switch_page("main")
- 
+
 if __name__ == '__main__' :
     main()

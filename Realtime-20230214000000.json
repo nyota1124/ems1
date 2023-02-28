@@ -1,0 +1,51 @@
+{ "pms": [
+				{
+						"timeget" : 20230214000000,
+						"site_id" : 164010				}],
+ "meterList": [
+				{
+						"device_id" : 1,
+						"me_a_power" : 0,
+						"me_freq" : 60.0,
+						"me_pf" : 0,
+						"me_a_energy_hi" : 5461931.5,
+						"me_a_energy_lo" : 0				},
+				{
+						"device_id" : 2,
+						"me_a_power" : 0,
+						"me_freq" : 60.0,
+						"me_pf" : 0,
+						"me_a_energy_hi" : 0,
+						"me_a_energy_lo" : 0				}],
+ "pcsList": [
+				{
+						"device_id" : 1,
+						"pcs_dc_v" : 802.4,
+						"pcs_dc_v_link" : 800.7,
+						"pcs_dc_a" : 0.7,
+						"pcs_dc_w" : 0.5,
+						"pcs_freq" : 60,
+						"pcs_pf" : 0.0,
+						"pcs_a_p_power" : 0,
+						"pcs_inter_temp_1" : 33				}],
+ "bbmsList": [
+				{
+						"device_id" : 1,
+						"bat_b_heart_beat" : 2,
+						"bat_b_soc" : 2.5,
+						"bat_b_soh" : 98.3,
+						"bat_b_volte" : 802.3,
+						"bat_b_current" : 0,
+						"bat_b_ch_pow_limit" : 415,
+						"bat_b_disch_pow_limit" : 415,
+						"bat_b_aver_temp" : 20.8				}],
+ "imdList": [
+				{
+						"device_id" : 1,
+						"imd_iso_v" : 20000,
+						"imd_test_alarm" : 0				}],
+ "tempList": [
+				{
+						"device_id" : 1,
+						"imd_sensor_1" : 18.4,
+						"imd_sensor_2" : 40.7				}]}
