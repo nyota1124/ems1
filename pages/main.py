@@ -71,12 +71,10 @@ def weather_lottie_setfn(code:str):
     elif code=="흐림":
         return  "./lotties/weather-cloud.json"
 def main():
-    os_name =  platform.system()
-    
-    if (os_name == 'Windows'):
-        m=st.markdown('<style>' + open('home/ubuntu/github/ems1/css/style.css').read() + '</style>', unsafe_allow_html=True)
-    elif(os_name == 'Linux'):
-        m=st.markdown('<style>' + open('./css/style.css').read() + '</style>', unsafe_allow_html=True)
+	os_name =  platform.system()
+
+	if os_name == "Windows":
+		m=st.markdown('<style>' + open('home/ubuntu/github/ems1/css/style.css').read() + '</style>', unsafe_allow_html=True)
 	
 
 	
