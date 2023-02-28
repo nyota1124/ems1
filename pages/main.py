@@ -73,7 +73,6 @@ def weather_lottie_setfn(code:str):
 def main():
 	os_name =  platform.system()
 	os_dir = os.getcwd()
-	st.write(os_dir)
 
 	if os_name == "Linux":
 		m=st.markdown('<style>' + open('CSS/style.css').read() + '</style>', unsafe_allow_html=True)
