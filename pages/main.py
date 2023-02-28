@@ -89,8 +89,8 @@ def main():
 	# st.write(type(result)) 
 	with st.sidebar:
 		st_lottie(lottie_hello)
-		tabs = on_hover_tabs(tabName=['Dashboard', 'Money', 'Economy'], 
-							iconName=['dashboard', 'money', 'economy'], default_choice=0)
+		tabs = on_hover_tabs(tabName=['Dashboard', 'Graph', 'ALARM'], 
+							iconName=['dashboard', 'money', 'alarm'], default_choice=0)
 	if tabs == 'Dashboard':
 		count = st_autorefresh(interval=10000, key="fizzbuzzcounter")
 		if count == 0:
@@ -195,13 +195,18 @@ def main():
 		with st.container():
 			colu1,colu2=st.columns(2)
 			with colu1:
-				with st.spinner('Wait for it...'):
+				gauge_view = st.empty()
+				with gauge_view ,st.spinner("Wait for it..."):
 					time.sleep(1)
+				# gauge_view.empty()
+				# with st.spinner('Wait for it...'):
+				# 	time.sleep(1)
 					gauge_option = {
 						"tooltip":{"formatter": "{a} <br/>{b} : {c}"},
 						"series": [{"name":"kw/H","type": "gauge","max":800,"pointer":{"icon":"path://M12.8,0.7l12,40.1H0.7L12.8,0.7z","length":"12%","width":20,"offsetCenter":[0,"-60%"],"itmestyle":{"color":"inherit"}},"progress":{"show": "true"},"detail":{"valueAnimation":"true","formmater":"{value}"},"data": [{"value":result[0][3],"name":"발전력"}],}]
 					}
-					st_echarts(gauge_option)
+				gauge_view.empty()
+				with gauge_view : st_echarts(gauge_option)
 			with colu2:
 				st.write("계측기정보")
 				df1 = pd.DataFrame(
