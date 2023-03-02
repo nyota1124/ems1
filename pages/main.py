@@ -104,10 +104,10 @@ def main():
 		with st.container():
 			col1,col2= st.columns(2)
 			with col1:
-				with open(weather_lottie_setfn(result_weather[0][1]), 'r') as file:lottie_weather  = json.load(file)
-				st_lottie(lottie_weather,height="300")
+				# with open(weather_lottie_setfn(result_weather[0][1]), 'r') as file:lottie_weather  = json.load(file)
+				# st_lottie(lottie_weather,height="300")
 				# st.markdown('<div style="text-align: center;">'+result_weather[0][1]+'</div>', unsafe_allow_html=True)
-				st.metric(value = result_weather[0][1] )
+				st.metric(label= "날씨"value = result_weather[0][1] )
 				st.metric(label="온도(℃)", value=result_weather[0][2] )
 			with col2:
 				with st.container():
