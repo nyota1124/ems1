@@ -102,7 +102,7 @@ def main():
 			color_name="violet-70",
 		)
 		with st.container():
-			col1,col2,col3,col4,col5,col6= st.columns(6)
+			col1,col2= st.columns(2)
 			with col1:
 				with open(weather_lottie_setfn(result_weather[0][1]), 'r') as file:lottie_weather  = json.load(file)
 				st_lottie(lottie_weather,height="300")
@@ -110,80 +110,83 @@ def main():
 				add_vertical_space(5)
 				st.metric(label="온도(℃)", value=result_weather[0][2] )
 			with col2:
-				file_path_solar = "./lotties/dash_solar.json"
-				with open(file_path_solar, 'r') as file:lottie_direction = json.load(file)
-				st_lottie(lottie_direction,key="dash_solar")
-				st.markdown('<div style="text-align: center;">'+str(result[0][3])+'</div>', unsafe_allow_html=True)
-			with col3:
-				if result[0][3] > 0 :
-					file_path_onright = "./lotties/dash_onright.json"
-					with open(file_path_onright, 'r') as file:lottie_direction = json.load(file)
-					st_lottie(lottie_direction,key="dash_onright")
-			with col4:
-				if result[0][3] > 0 or result[0][13] != 0 :
-					file_path_ongreen = "./lotties/dash_ongreen.json"
-					with open(file_path_ongreen, 'r') as file:lottie_direction  = json.load(file)
-					st_lottie(lottie_direction)
-				else:
-					file_path_onyellow = "./lotties/dash_onyellow.json"
-					with open(file_path_onyellow, 'r') as file:lottie_direction  = json.load(file)
-					st_lottie(lottie_direction)
+				with st.container():
+					collu1,collu2,collu3,collu4,collu5 =st.columns(5)
+					with collu1:
+						file_path_solar = "./lotties/dash_solar.json"
+						with open(file_path_solar, 'r') as file:lottie_direction = json.load(file)
+						st_lottie(lottie_direction,key="dash_solar")
+						st.markdown('<div style="text-align: center;">'+str(result[0][3])+'</div>', unsafe_allow_html=True)
+					with collu2:
+						if result[0][3] > 0 :
+							file_path_onright = "./lotties/dash_onright.json"
+							with open(file_path_onright, 'r') as file:lottie_direction = json.load(file)
+							st_lottie(lottie_direction,key="dash_onright")
+					with collu3:
+						if result[0][3] > 0 or result[0][13] != 0 :
+							file_path_ongreen = "./lotties/dash_ongreen.json"
+							with open(file_path_ongreen, 'r') as file:lottie_direction  = json.load(file)
+							st_lottie(lottie_direction)
+						else:
+							file_path_onyellow = "./lotties/dash_onyellow.json"
+							with open(file_path_onyellow, 'r') as file:lottie_direction  = json.load(file)
+							st_lottie(lottie_direction)
 
-				if result[0][13] > 0 :
-					file_path_onup = "./lotties/dash_onup.json"
-					with open(file_path_onup, 'r') as file:lottie_direction = json.load(file)
-					st_lottie(lottie_direction,key="dash_onup")
-				elif result[0][13] < 0 : 
-					file_path_ondown = "./lotties/dash_ondown.json"
-					with open(file_path_ondown, 'r') as file:lottie_direction = json.load(file)
-					st_lottie(lottie_direction,key="dash_ondown")
-				elif result[0][13] == 0 : 
-					file_path_onsleep = "./lotties/dash_onsleep.json"
-					with open(file_path_onsleep, 'r') as file:lottie_direction = json.load(file)
-					st_lottie(lottie_direction,key="dash_onsleep")
+						if result[0][13] > 0 :
+							file_path_onup = "./lotties/dash_onup.json"
+							with open(file_path_onup, 'r') as file:lottie_direction = json.load(file)
+							st_lottie(lottie_direction,key="dash_onup")
+						elif result[0][13] < 0 : 
+							file_path_ondown = "./lotties/dash_ondown.json"
+							with open(file_path_ondown, 'r') as file:lottie_direction = json.load(file)
+							st_lottie(lottie_direction,key="dash_ondown")
+						elif result[0][13] == 0 : 
+							file_path_onsleep = "./lotties/dash_onsleep.json"
+							with open(file_path_onsleep, 'r') as file:lottie_direction = json.load(file)
+							st_lottie(lottie_direction,key="dash_onsleep")
 
-				if result[0][13] > 0 :
-					file_path_uncharging = "./lotties/dash_uncharging.json"
-					with open(file_path_uncharging, 'r') as file:lottie_direction = json.load(file)
-					st_lottie(lottie_direction,key="dash_uncharging")
-				elif result[0][13] < 0 : 
-					file_path_charging = "./lotties/dash_charging.json"
-					with open(file_path_charging, 'r') as file:lottie_direction = json.load(file)
-					st_lottie(lottie_direction,key="dash_charging")
-				elif result[0][13] == 0 : 
-					if result[0][16] > 10 : 
-						file_path_charged = "./lotties/dash_charged.json"
-						with open(file_path_charged, 'r') as file:lottie_direction = json.load(file)
-						st_lottie(lottie_direction,key="dash_charged")
-					else:
-						file_path_uncharged = "./lotties/dash_uncharged.json"
-						with open(file_path_uncharged, 'r') as file:lottie_direction = json.load(file)
-						st_lottie(lottie_direction,key="dash_uncharged")
-				st.markdown('<div style="text-align: center;">SOC : '+str(result[0][16])+'%</div>', unsafe_allow_html=True)
-    
-			with col5:
-				if result[0][13] == 0 and result[0][3] > 0  :
-					file_path_onright = "./lotties/dash_onright.json"
-					with open(file_path_onright, 'r') as file:lottie_direction = json.load(file)
-					st_lottie(lottie_direction,key="dash_onright1")
-					on_outputelec = True
-				elif result[0][13] > 0 :
-					file_path_onright = "./lotties/dash_onright.json"
-					with open(file_path_onright, 'r') as file:lottie_direction = json.load(file)
-					st_lottie(lottie_direction,key="dash_onright1")
-					on_outputelec = True
-				else:
-					on_outputelec = False
+						if result[0][13] > 0 :
+							file_path_uncharging = "./lotties/dash_uncharging.json"
+							with open(file_path_uncharging, 'r') as file:lottie_direction = json.load(file)
+							st_lottie(lottie_direction,key="dash_uncharging")
+						elif result[0][13] < 0 : 
+							file_path_charging = "./lotties/dash_charging.json"
+							with open(file_path_charging, 'r') as file:lottie_direction = json.load(file)
+							st_lottie(lottie_direction,key="dash_charging")
+						elif result[0][13] == 0 : 
+							if result[0][16] > 10 : 
+								file_path_charged = "./lotties/dash_charged.json"
+								with open(file_path_charged, 'r') as file:lottie_direction = json.load(file)
+								st_lottie(lottie_direction,key="dash_charged")
+							else:
+								file_path_uncharged = "./lotties/dash_uncharged.json"
+								with open(file_path_uncharged, 'r') as file:lottie_direction = json.load(file)
+								st_lottie(lottie_direction,key="dash_uncharged")
+						st.markdown('<div style="text-align: center;">SOC : '+str(result[0][16])+'%</div>', unsafe_allow_html=True)
+			
+					with collu4:
+						if result[0][13] == 0 and result[0][3] > 0  :
+							file_path_onright = "./lotties/dash_onright.json"
+							with open(file_path_onright, 'r') as file:lottie_direction = json.load(file)
+							st_lottie(lottie_direction,key="dash_onright1")
+							on_outputelec = True
+						elif result[0][13] > 0 :
+							file_path_onright = "./lotties/dash_onright.json"
+							with open(file_path_onright, 'r') as file:lottie_direction = json.load(file)
+							st_lottie(lottie_direction,key="dash_onright1")
+							on_outputelec = True
+						else:
+							on_outputelec = False
 
 
-			with col6:
-				file_path_trans = "./lotties/dash_trans.json"
-				with open(file_path_trans, 'r') as file:lottie_direction = json.load(file)
-				st_lottie(lottie_direction,key="dash_ontrans")
-				if on_outputelec :
-					st.markdown('<div style="text-align: center;"> 송전중 </div>', unsafe_allow_html=True)
-				else:
-					st.markdown('<div style="text-align: center;"> 대기중 </div>', unsafe_allow_html=True)
+					with collu5:
+						file_path_trans = "./lotties/dash_trans.json"
+						with open(file_path_trans, 'r') as file:lottie_direction = json.load(file)
+						st_lottie(lottie_direction,key="dash_ontrans")
+						if on_outputelec :
+							st.markdown('<div style="text-align: center;"> 송전중 </div>', unsafe_allow_html=True)
+						else:
+							st.markdown('<div style="text-align: center;"> 대기중 </div>', unsafe_allow_html=True)
      
 			style_metric_cards(background_color="black-70")
 		with st.container():
