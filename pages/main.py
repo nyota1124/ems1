@@ -203,7 +203,7 @@ def main():
 				# 	time.sleep(1)
 					gauge_option = {
 						"tooltip":{"formatter": "{a} <br/>{b} : {c}"},
-						"series": [{"name":"kw/H","type": "gauge","max":800,"pointer":{"icon":"path://M12.8,0.7l12,40.1H0.7L12.8,0.7z","length":"12%","width":20,"offsetCenter":[0,"-60%"],"itmestyle":{"color":"inherit"}},"progress":{"show": "true"},"detail":{"valueAnimation":"true","formmater":"{value}"},"data": [{"value":result[0][3],"name":"발전력"}],}]
+						"series": [{"name":"kw/H","type": "gauge","max":800,"pointer":{"icon":"path://M12.8,0.7l12,40.1H0.7L12.8,0.7z","length":"12%","width":20,"offsetCenter":[0,"-60%"],"itmestyle":{"color":"inherit"}},"progress":{"show": "true"},"detail":{"valueAnimation":"false","formmater":"{value}"},"data": [{"value":result[0][3],"name":"발전력"}],}]
 					}
 				gauge_view.empty()
 				with gauge_view : st_echarts(gauge_option)
@@ -230,7 +230,7 @@ def main():
 				add_vertical_space(3)
 				gauge_option = {
 					"tooltip":{"formatter": "{a} <br/>{b} : {c}"},
-					"series": [{"name":"kw/H","type": "gauge","max":800,"pointer":{"icon":"path://M12.8,0.7l12,40.1H0.7L12.8,0.7z","length":"12%","width":20,"offsetCenter":[0,"-60%"],"itmestyle":{"color":"inherit"}},"progress":{"show": "true"},"detail":{"valueAnimation":"true","formmater":"{value}"},"data": [{"value":result[0][13],"name":"PCS_power"}],}]
+					"series": [{"name":"kw/H","type": "gauge","min":-800,"max":800,"pointer":{"icon":"path://M12.8,0.7l12,40.1H0.7L12.8,0.7z","length":"12%","width":20,"offsetCenter":[0,"-60%"],"itmestyle":{"color":"inherit"}},"progress":{"show": "true"},"detail":{"valueAnimation":"true","formmater":"{value}"},"data": [{"value":result[0][13],"name":"PCS_power"}],}]
 				}
 				st_echarts(gauge_option,key = "pcs")
 			with colu2:
