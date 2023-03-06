@@ -24,6 +24,7 @@ from streamlit_extras.add_vertical_space import add_vertical_space
 from streamlit_echarts import st_pyecharts
 import pyecharts.options as opts
 from pyecharts.charts import Gauge,Liquid
+from streamlit_elements import elements, mui, html
 st.set_page_config(layout="wide")
 
 
@@ -78,8 +79,24 @@ def main():
 		m=st.markdown('<style>' + open('CSS/style.css').read() + '</style>', unsafe_allow_html=True)
 	elif os_name == "Windows":
 		m=st.markdown('<style>' + open('./CSS/style.css').read() + '</style>', unsafe_allow_html=True)
-
 	
+	hide_default_format = """
+		<style>
+		#MainMenu {visibility: hidden; }
+		footer {visibility: hidden;}
+		</style>
+		"""
+	st.markdown(hide_default_format, unsafe_allow_html=True)
+	hide_table_row_index = """
+								<style>
+								thead tr th:first-child {display:none}
+								tbody th {display:none}
+								</style>
+								"""
+
+					# Inject CSS with Markdown
+	st.markdown(hide_table_row_index, unsafe_allow_html=True)
+		
 	file_path = "./lotties/car-ani.json"
 	with open(file_path, 'r') as file:lottie_hello  = json.load(file)
 	result,result_weather,result_genday = load_data(164010)
@@ -96,19 +113,71 @@ def main():
 		if count == 0:
 			with st.spinner(text='In progress'):sleep(2 )
 			st.balloons()
+   
+   
 		colored_header(
 			label=str(result[0][1])+"  " + format(tabs),
 			description = " ",
 			color_name="violet-70",
 		)
 		with st.container():
-			col1,col2= st.columns(2)
+			col1,col2,col3= st.columns(3)
 			with col1:
-				# with open(weather_lottie_setfn(result_weather[0][1]), 'r') as file:lottie_weather  = json.load(file)
-				# st_lottie(lottie_weather,height="300")
-				# st.markdown('<div style="text-align: center;">'+result_weather[0][1]+'</div>', unsafe_allow_html=True)
-				st.metric(label= "날씨" , value = result_weather[0][1] )
-				st.metric(label="온도(℃)", value=result_weather[0][2] )
+				with elements("meter"):
+					with mui.Paper(elevation=24, variant="outlined", square=True):
+						with mui.Button:
+							mui.icon.EmojiPeople()
+							mui.icon.DoubleArrow()
+							mui.Typography("계측기 정보")
+
+						gauge_option = {
+								"tooltip":{"formatter": "{a} <br/>{b} : {c}"},
+								"series": [{"name":"kw/H","type": "gauge","max":800,"pointer":{"icon":"path://M12.8,0.7l12,40.1H0.7L12.8,0.7z","length":"12%","width":20,"offsetCenter":[0,"-60%"],"itmestyle":{"color":"inherit"}},"progress":{"show": "true"},"detail":{"valueAnimation":"false","formmater":"{value}"},"data": [{"value":result[0][3],"name":"발전력"}],}]
+							}
+	
+						df1 = pd.DataFrame(
+							(("주파수",result[0][4]),("me_pf",result[0][5])),
+							columns=("Name","Value"),
+						)
+						colu1,colu2 =st.columns(2)
+						with colu1:
+  
+							st_echarts(gauge_option,key ="gauge1")
+						with colu2:
+							st.table(df1)
+
+	# 			with st.container():
+	# 				# gauge_view.empty()
+	# 				# with st.spinner('Wait for it...'):
+	# 				# 	time.sleep(1)
+	# 				gauge_option = {
+	# 						"tooltip":{"formatter": "{a} <br/>{b} : {c}"},
+	# 						"series": [{"name":"kw/H","type": "gauge","max":800,"pointer":{"icon":"path://M12.8,0.7l12,40.1H0.7L12.8,0.7z","length":"12%","width":20,"offsetCenter":[0,"-60%"],"itmestyle":{"color":"inherit"}},"progress":{"show": "true"},"detail":{"valueAnimation":"false","formmater":"{value}"},"data": [{"value":result[0][3],"name":"발전력"}],}]
+	# 					}
+	# 				st_echarts(gauge_option)
+	# 				# with open(weather_lottie_setfn(result_weather[0][1]), 'r') as file:lottie_weather  = json.load(file)
+	# 				# st_lottie(lottie_weather,height="300")
+	# 				# st.markdown('<div style="text-align: center;">'+result_weather[0][1]+'</div>', unsafe_allow_html=True)
+	# 				# st.metric(label= "날씨" , value = result_weather[0][1] )
+	# 				# st.metric(label="온도(℃)", value=result_weather[0][2] )
+	# 				st.write("계측기정보")
+	# 				df1 = pd.DataFrame(
+	# 					(("주파수",result[0][4]),("me_pf",result[0][5])),
+	# 					columns=("Name","Value"),
+	# 				)
+	# # CSS to inject contained in a string
+	# 				hide_table_row_index = """
+	# 							<style>
+	# 							thead tr th:first-child {display:none}
+	# 							tbody th {display:none}
+	# 							</style>
+	# 							"""
+
+	# 				# Inject CSS with Markdown
+	# 				st.markdown(hide_table_row_index, unsafe_allow_html=True)
+	# 				st.table(df1)
+
+
 			with col2:
 				with st.container():
 					collu1,collu2,collu3,collu4,collu5 =st.columns(5)
@@ -187,151 +256,148 @@ def main():
 							st.markdown('<div style="text-align: center;"> 송전중 </div>', unsafe_allow_html=True)
 						else:
 							st.markdown('<div style="text-align: center;"> 대기중 </div>', unsafe_allow_html=True)
-     
+
+  
+			with col3:
+				with elements("pcs_info"):
+					st.write("pcs정보")
+					colu1,colu2 = st.columns(2)
+					with colu1:
+						gauge_option = {
+							"tooltip":{"formatter": "{a} <br/>{b} : {c}"},
+							"series": [{"name":"kw/H","type": "gauge","min":-800,"max":800,"pointer":{"icon":"path://M12.8,0.7l12,40.1H0.7L12.8,0.7z","length":"12%","width":20,"offsetCenter":[0,"-60%"],"itmestyle":{"color":"inherit"}},"progress":{"show": "true"},"detail":{"valueAnimation":"true","formmater":"{value}"},"data": [{"value":result[0][13],"name":"PCS_power"}],}]
+						}
+						st_echarts(gauge_option,key = "pcs")
+
+						df1 = pd.DataFrame(
+							(("DC_V",result[0][7]),("DC_V_LINK",result[0][8]),("DC_A",result[0][9]),("DC_W",result[0][10]),("freq",result[0][11]),("pf",result[0][12]),("Aver_temp",result[0][14])),
+							columns=("Name","Value"),
+						)
+					with colu2:
+						st.table(df1)
 			style_metric_cards(background_color="black-70")
+		with st.container():
+			col1,col2,col3 = st.columns(3)
+			with col1:
+				with st.container():
+					colu1,colu2 = st.columns(2)
+					with colu1:
+						liquidfill_option = {
+							"series": [{"type": "liquidFill", "data": [result[0][16]/100, result[0][16]/100*0.8, result[0][16]/100*0.6, result[0][16]/100*0.4],"shape":"container"}]
+						}
+						st_echarts(liquidfill_option)
+					with colu2:
+						st.write("배터리정보")
+						df = pd.DataFrame(
+							(("Heartbeat",result[0][15]),
+							("SOH",result[0][17]),
+							("Volte",result[0][18]),
+							("Current",result[0][19]),
+							("Charge power limit",result[0][20]),
+							("discharge power limit",result[0][21]),
+							("Aver_Temp",result[0][22])),
+							columns=("Name","Value"),
+						)
+		# CSS to inject contained in a string
+						hide_table_row_index = """
+									<style>
+									thead tr th:first-child {display:none}
+									tbody th {display:none}
+									</style>
+									"""
+
+						# Inject CSS with Markdown
+						st.markdown(hide_table_row_index, unsafe_allow_html=True)
+
+						st.table(df)
+			with col2:
+				with st.container():
+						st.write("5일간의 발전 정보") 
+						options = {
+							"xAxis": {
+								"type": "category",
+								"boundaryGap": False,
+								"data": ["Mon", "Tue", "Wed", "Thu", "Fri"],
+							},
+							"yAxis": {"type": "value"},
+							"series": [
+								{
+									"data": [820, 932, 901, 934, 1290],
+									"type": "line",
+									"areaStyle": {},
+								}
+							],
+						}
+						st_echarts(options=options)
+			with col3:
+				with st.container():
+									colu1,colu2 = st.columns(2)
+									with colu1:
+										st.metric(label="센서1 온도(℃)", value=result[0][25] )
+
+										st.metric(label="센서2 온도(℃)", value=result[0][26] ) 
+									with colu2:
+										st.write("imd")
+										df = pd.DataFrame(
+											(("iso_v",result[0][23]),
+											("test_alarm",result[0][24])),
+											columns=("Name","Value"),
+										)
+						# CSS to inject contained in a string
+										hide_table_row_index = """
+													<style>
+													thead tr th:first-child {display:none}
+													tbody th {display:none}
+													</style>
+													"""
+
+										# Inject CSS with Markdown
+										st.markdown(hide_table_row_index, unsafe_allow_html=True)
+										st.table(df)
 		with st.container():
 			colored_header(
 				label="오늘의 발전량은 "+str(result_genday[0][3])+"kw 입니다.",
 				description=" ",
 				color_name="orange-80",
 			)
-		with st.container():
-			colu1,colu2=st.columns(2)
-			with colu1:
-				gauge_view = st.empty()
-				with gauge_view ,st.spinner("Wait for it..."):
-					time.sleep(1)
-				# gauge_view.empty()
-				# with st.spinner('Wait for it...'):
-				# 	time.sleep(1)
-					gauge_option = {
-						"tooltip":{"formatter": "{a} <br/>{b} : {c}"},
-						"series": [{"name":"kw/H","type": "gauge","max":800,"pointer":{"icon":"path://M12.8,0.7l12,40.1H0.7L12.8,0.7z","length":"12%","width":20,"offsetCenter":[0,"-60%"],"itmestyle":{"color":"inherit"}},"progress":{"show": "true"},"detail":{"valueAnimation":"false","formmater":"{value}"},"data": [{"value":result[0][3],"name":"발전력"}],}]
-					}
-				gauge_view.empty()
-				with gauge_view : st_echarts(gauge_option)
-			with colu2:
-				st.write("계측기정보")
-				df1 = pd.DataFrame(
-					(("주파수",result[0][4]),("me_pf",result[0][5])),
-					columns=("Name","Value"),
-     			)
-# CSS to inject contained in a string
-				hide_table_row_index = """
-							<style>
-							thead tr th:first-child {display:none}
-							tbody th {display:none}
-							</style>
-							"""
+# 		with st.container():
+# 			colu1,colu2=st.columns(2)
+# 			with colu1:
+# 				# gauge_view = st.empty()
+# 				# with gauge_view ,st.spinner("Wait for it..."):
+# 				# 	time.sleep(1)
+# 				# # gauge_view.empty()
+# 				# # with st.spinner('Wait for it...'):
+# 				# # 	time.sleep(1)
+# 				# 	gauge_option = {
+# 				# 		"tooltip":{"formatter": "{a} <br/>{b} : {c}"},
+# 				# 		"series": [{"name":"kw/H","type": "gauge","max":800,"pointer":{"icon":"path://M12.8,0.7l12,40.1H0.7L12.8,0.7z","length":"12%","width":20,"offsetCenter":[0,"-60%"],"itmestyle":{"color":"inherit"}},"progress":{"show": "true"},"detail":{"valueAnimation":"false","formmater":"{value}"},"data": [{"value":result[0][3],"name":"발전력"}],}]
+# 				# 	}
+# 				# gauge_view.empty()
+# 				# with gauge_view : st_echarts(gauge_option)
+# 			with colu2:
+# 				st.write("계측기정보")
+# 				df1 = pd.DataFrame(
+# 					(("주파수",result[0][4]),("me_pf",result[0][5])),
+# 					columns=("Name","Value"),
+#      			)
+# # CSS to inject contained in a string
+# 				hide_table_row_index = """
+# 							<style>
+# 							thead tr th:first-child {display:none}
+# 							tbody th {display:none}
+# 							</style>
+# 							"""
 
-				# Inject CSS with Markdown
-				st.markdown(hide_table_row_index, unsafe_allow_html=True)
-				st.table(df1)
-		with st.container():
-			colu1,colu2=st.columns(2)
-			with colu1:
-				add_vertical_space(3)
-				gauge_option = {
-					"tooltip":{"formatter": "{a} <br/>{b} : {c}"},
-					"series": [{"name":"kw/H","type": "gauge","min":-800,"max":800,"pointer":{"icon":"path://M12.8,0.7l12,40.1H0.7L12.8,0.7z","length":"12%","width":20,"offsetCenter":[0,"-60%"],"itmestyle":{"color":"inherit"}},"progress":{"show": "true"},"detail":{"valueAnimation":"true","formmater":"{value}"},"data": [{"value":result[0][13],"name":"PCS_power"}],}]
-				}
-				st_echarts(gauge_option,key = "pcs")
-			with colu2:
-				st.write("pcs정보")
-				df1 = pd.DataFrame(
-					(("DC_V",result[0][7]),("DC_V_LINK",result[0][8]),("DC_A",result[0][9]),("DC_W",result[0][10]),("freq",result[0][11]),("pf",result[0][12]),("Aver_temp",result[0][14])),
-					columns=("Name","Value"),
-     			)
-# CSS to inject contained in a string
-				hide_table_row_index = """
-							<style>
-							thead tr th:first-child {display:none}
-							tbody th {display:none}
-							</style>
-							"""
+# 				# Inject CSS with Markdown
+# 				st.markdown(hide_table_row_index, unsafe_allow_html=True)
+# 				st.table(df1)
 
-				# Inject CSS with Markdown
-				st.markdown(hide_table_row_index, unsafe_allow_html=True)
-				st.table(df1)
 
-		with st.container():
-			colu1,colu2 = st.columns(2)
-			with colu1:
-				liquidfill_option = {
-					"series": [{"type": "liquidFill", "data": [result[0][16]/100, result[0][16]/100*0.8, result[0][16]/100*0.6, result[0][16]/100*0.4],"shape":"container"}]
-				}
-				st_echarts(liquidfill_option)
-			with colu2:
-				st.write("배터리정보")
-				df = pd.DataFrame(
-					(("Heartbeat",result[0][15]),
-      				("SOH",result[0][17]),
-          			("Volte",result[0][18]),
-             		("Current",result[0][19]),
-               		("Charge power limit",result[0][20]),
-                 	("discharge power limit",result[0][21]),
-                  	("Aver_Temp",result[0][22])),
-					columns=("Name","Value"),
-     			)
-# CSS to inject contained in a string
-				hide_table_row_index = """
-							<style>
-							thead tr th:first-child {display:none}
-							tbody th {display:none}
-							</style>
-							"""
 
-				# Inject CSS with Markdown
-				st.markdown(hide_table_row_index, unsafe_allow_html=True)
 
-				st.table(df)
-
-		with st.container():
-			colu1,colu2 = st.columns(2)
-			with colu1:
-				options = {
-					"xAxis": {
-						"type": "category",
-						"boundaryGap": False,
-						"data": ["Mon", "Tue", "Wed", "Thu", "Fri"],
-					},
-					"yAxis": {"type": "value"},
-					"series": [
-						{
-							"data": [820, 932, 901, 934, 1290],
-							"type": "line",
-							"areaStyle": {},
-						}
-					],
-				}
-				st_echarts(options=options)
-			with colu2:
-				st.write("5일간의 발전 정보")   
    
-		with st.container():
-			colu1,colu2 = st.columns(2)
-			with colu1:
-				st.metric(label="센서1 온도(℃)", value=result[0][25] )
 
-				st.metric(label="센서2 온도(℃)", value=result[0][26] ) 
-			with colu2:
-				st.write("imd")
-				df = pd.DataFrame(
-					(("iso_v",result[0][23]),
-      				("test_alarm",result[0][24])),
-					columns=("Name","Value"),
-     			)
-# CSS to inject contained in a string
-				hide_table_row_index = """
-							<style>
-							thead tr th:first-child {display:none}
-							tbody th {display:none}
-							</style>
-							"""
-
-				# Inject CSS with Markdown
-				st.markdown(hide_table_row_index, unsafe_allow_html=True)
-				st.table(df)
     
 if __name__ == '__main__' :
     main()
