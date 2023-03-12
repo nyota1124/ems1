@@ -74,6 +74,7 @@ def render_svg(svg):
     st.write(html, unsafe_allow_html=True)
     
 def main():
+	style_metric_cards(background_color="black-70")
 	os_name =  platform.system()
 	os_dir = os.getcwd()
 
@@ -117,20 +118,15 @@ def main():
 			description = " ",
 			color_name="violet-70",
 		)
-		tabs = on_hover_tabs(tabName=['Dashboard', 'Graph', 'ALARM'], 
-							iconName=['dashboard', 'money', 'alarm'], default_choice=0)
+		tabs = on_hover_tabs(tabName=['Dashboard', 'Graph', 'ALARM','Location'], 
+							iconName=['dashboard', 'money', 'alarm','reply'], default_choice=0)
 	if tabs == 'Dashboard':
 		count = st_autorefresh(interval=10000, key="fizzbuzzcounter")
 		if count == 0:
 			with st.spinner(text='In progress'):sleep(2 )
 			st.balloons()
    
-		colipre,coli1,coli2,coli3,coli4,coli5,coli6=st.columns([1,5,1,1,1,1,1])
-		with colipre:
-			g = open("./lotties/ico-system-normal.svg", 'rt', encoding='UTF8')
-			ico_normal = g.readlines()	
-			ico_string=''.join(ico_normal)
-			render_svg(ico_string)
+		coli1,coli2,coli3,coli4,coli5,coli6=st.columns([5,1,1,1,1,1])
 		with coli1:
 			st.title(str(result[0][1])+"  발전소" )
 		with coli2:
@@ -299,7 +295,6 @@ def main():
 						)
 					with colu2:
 						st.table(df1)
-			style_metric_cards(background_color="black-70")
 		with st.container():
 			col1,col2,col3 = st.columns(3)
 			with col1:
@@ -410,6 +405,48 @@ def main():
 # 				# Inject CSS with Markdown
 # 				st.markdown(hide_table_row_index, unsafe_allow_html=True)
 # 				st.table(df1)
+	elif tabs == 'Location':
+		switch_page('loc')
+	elif tabs == 'Graph':
+		coli1,coli2,coli3,coli4,coli5,coli6=st.columns([5,1,1,1,1,1])
+		with coli1:
+			st.title(str(result[0][1])+"  발전소" )
+		with coli2:
+			st.metric(label= "날씨" , value = result_weather[0][1] )
+		with coli3:
+			st.metric(label="온도(℃)", value=result_weather[0][2] )
+		with coli4:
+			st.metric(label="태양광", value=result[0][3] )
+		with coli5:
+			st.metric(label="PCS", value=result[0][13] )
+		with coli6:
+			st.metric(label="SOC", value=result[0][16] )
+   
+		colored_header(
+			label=format(tabs),
+			description = " ",
+			color_name="violet-70",
+		)
+	elif tabs == 'ALARM':
+		coli1,coli2,coli3,coli4,coli5,coli6=st.columns([5,1,1,1,1,1])
+		with coli1:
+			st.title(str(result[0][1])+"  발전소" )
+		with coli2:
+			st.metric(label= "날씨" , value = result_weather[0][1] )
+		with coli3:
+			st.metric(label="온도(℃)", value=result_weather[0][2] )
+		with coli4:
+			st.metric(label="태양광", value=result[0][3] )
+		with coli5:
+			st.metric(label="PCS", value=result[0][13] )
+		with coli6:
+			st.metric(label="SOC", value=result[0][16] )
+   
+		colored_header(
+			label=format(tabs),
+			description = " ",
+			color_name="violet-70",
+		)
 
 if __name__ == '__main__' :
     main()

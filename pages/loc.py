@@ -26,7 +26,7 @@ def viewfn(select_code):
         newlist=[(i,j) for i in range(6) for j in range(3) if cities[i][j]==sc_lat]
         index_code =newlist[0][0]
         
-        return_code= st.write(str(sc_lat) + "|" + str(sc_lng) + "$$$$$" +str(cities[index_code][2])) 
+        # return_code= st.write(str(sc_lat) + "|" + str(sc_lng) + "$$$$$" +str(cities[index_code][2])) 
         return_code1 = st.button(label=str(cities[index_code][2]))
         # return_code1 = st.warning("1234")
         
@@ -35,7 +35,7 @@ def viewfn(select_code):
         return_code1 = None
         # select_code1 = type(select_code1)
  
-    return return_code,return_code1
+    return return_code1
 
 def main():
 	m = st.markdown("""
@@ -66,6 +66,13 @@ def main():
  	.css-uzfz7i {
         display: none;
     }
+    Button[kind="header"] {
+        display: none;
+    }
+	.css-1vencpc {
+    display:none;
+}
+
 	</style>""", unsafe_allow_html=True)
 
 	
@@ -83,15 +90,15 @@ def main():
 	for i in range(len(cities)):
 
 		html = """<b> """ 
-		html = html + str(cities[i][2])
-		html = html + "</b><br>etc."""
+		html = html + str(cities[i][2]) +" 발전소"
+		html = html + "</b>"""
 		iframe = folium.IFrame(html=html, width=200, height=100)
 		
 		folium.Marker(location=[cities[i][0],cities[i][1]],icon=folium.Icon(color='red',icon='ok'),tooltip=folium.Tooltip(iframe.render())).add_to(m)
 	
 	output=st_folium(m,width=1200, returned_objects=["last_object_clicked"])
-	st.write(output)
-	output_write,output_btn=viewfn(output)
+	# st.write(output)
+	output_btn=viewfn(output)
 	if output_btn:
 		switch_page("main")
 		# output_btn.onclick = switch_page("main")
