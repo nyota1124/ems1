@@ -125,9 +125,27 @@ def main():
 			with st.spinner(text='In progress'):sleep(2 )
 			st.balloons()
    
+		colipre,coli1,coli2,coli3,coli4,coli5,coli6=st.columns([1,5,1,1,1,1,1])
+		with colipre:
+			g = open("./lotties/ico-system-normal.svg", 'rt', encoding='UTF8')
+			ico_normal = g.readlines()	
+			ico_string=''.join(ico_normal)
+			render_svg(ico_string)
+		with coli1:
+			st.title(str(result[0][1])+"  발전소" )
+		with coli2:
+			st.metric(label= "날씨" , value = result_weather[0][1] )
+		with coli3:
+			st.metric(label="온도(℃)", value=result_weather[0][2] )
+		with coli4:
+			st.metric(label="태양광", value=result[0][3] )
+		with coli5:
+			st.metric(label="PCS", value=result[0][13] )
+		with coli6:
+			st.metric(label="SOC", value=result[0][16] )
    
 		colored_header(
-			label=str(result[0][1])+"  " + format(tabs),
+			label=format(tabs),
 			description = " ",
 			color_name="violet-70",
 		)
@@ -147,7 +165,6 @@ def main():
 						)
 						colu1,colu2 =st.columns(2)
 						with colu1:
-  
 							st_echarts(gauge_option,key ="gauge1")
 						with colu2:
 							st.table(df1)
@@ -164,8 +181,7 @@ def main():
 	# 				# with open(weather_lottie_setfn(result_weather[0][1]), 'r') as file:lottie_weather  = json.load(file)
 	# 				# st_lottie(lottie_weather,height="300")
 	# 				# st.markdown('<div style="text-align: center;">'+result_weather[0][1]+'</div>', unsafe_allow_html=True)
-	# 				# st.metric(label= "날씨" , value = result_weather[0][1] )
-	# 				# st.metric(label="온도(℃)", value=result_weather[0][2] )
+
 	# 				st.write("계측기정보")
 	# 				df1 = pd.DataFrame(
 	# 					(("주파수",result[0][4]),("me_pf",result[0][5])),
@@ -355,15 +371,6 @@ def main():
 											columns=("Name","Value"),
 										)
 						# CSS to inject contained in a string
-										hide_table_row_index = """
-													<style>
-													thead tr th:first-child {display:none}
-													tbody th {display:none}
-													</style>
-													"""
-
-										# Inject CSS with Markdown
-										st.markdown(hide_table_row_index, unsafe_allow_html=True)
 										st.table(df)
 		# with st.container():
 		# 	colored_header(
@@ -404,33 +411,5 @@ def main():
 # 				st.markdown(hide_table_row_index, unsafe_allow_html=True)
 # 				st.table(df1)
 
-
-
-
-   
-
-    
 if __name__ == '__main__' :
     main()
-
-
-
-		# 		c = (
-		# 			Gauge()
-		# .add(
-		# 	"PMS",
-		# 	[("지영", 130.1)],max_= 500,
-		# 	split_number=5,
-		# 	axisline_opts=opts.AxisLineOpts(
-		# 		linestyle_opts=opts.LineStyleOpts(
-		# 			color=[(0.3, "#67e0e3"), (0.7, "#05FF05"), (1, "#fd666d")], width=10
-		# 		)
-		# 	),
-		# 	detail_label_opts=opts.LabelOpts(formatter="{value}"),
-		# )
-		# .set_global_opts(
-		# 	title_opts=opts.TitleOpts(title="PMS"),
-		# 	legend_opts=opts.LegendOpts(is_show=False),
-		# )
-		# 		)
-		# 		st_pyecharts(c)

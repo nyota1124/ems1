@@ -95,7 +95,7 @@ def main():
 			switch_page("loc")
 		else :
 			st.warning(loginfn(user_id,user_pwd))
-
+	
   	
  	# user_id = st.text_input("ユーザー名を入力してください")
 	# password = st.text_input("パスワードを入力してください",type='password')
