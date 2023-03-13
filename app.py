@@ -3,10 +3,13 @@ import pandas as pd
 import sqlite3 
 import hashlib
 import folium
+import base64
 from time import sleep
 from streamlit_folium import st_folium
 from streamlit.components.v1 import html
 from streamlit_extras.switch_page_button import switch_page
+from streamlit_extras.add_vertical_space import add_vertical_space
+
 st.set_page_config(initial_sidebar_state="collapsed")
 with st.spinner(text='In progress'):
     sleep(2)
@@ -41,6 +44,12 @@ def loginfn(user_id,user_pwd):
     else:
         return user_id + user_pwd
     
+def render_svg(svg):
+    """Renders the given svg string."""
+    b64 = base64.b64encode(svg.encode('utf-8')).decode("utf-8")
+    html = r'<img src="data:image/svg+xml;base64,%s"/>' % b64
+    st.write(html, unsafe_allow_html=True)
+    add_vertical_space(3)
 def main():
 	m = st.markdown("""
 	<style>
@@ -75,7 +84,12 @@ def main():
 	</style>""", unsafe_allow_html=True)
 
   
-	st.title("EF-EMS")
+	f = open("./lotties/logo.svg", 'rt', encoding='UTF8')
+	lines = f.readlines()	
+	line_string=''.join(lines)
+
+	render_svg(line_string)
+	
 	with st.form(key='my_form',clear_on_submit=True):
 		st.subheader(":blue[Login]")
 		

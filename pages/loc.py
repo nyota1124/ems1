@@ -7,7 +7,7 @@ from time import sleep
 from streamlit_folium import st_folium
 from streamlit.components.v1 import html
 from streamlit_extras.switch_page_button import switch_page
-
+st.set_page_config(initial_sidebar_state="collapsed")
 cities = [[37.566687, 126.978417,"서울",0],
           [35.179774, 129.075004,"부산",1],
           [37.455900, 126.705522,"인천",2],
